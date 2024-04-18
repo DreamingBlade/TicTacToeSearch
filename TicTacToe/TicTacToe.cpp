@@ -1,11 +1,10 @@
-// TicTacToe.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-struct Space {
+struct Space
+{
 
     char mark = ' ';
 
@@ -13,8 +12,20 @@ struct Space {
     {
         this->mark = aMark;
     }
-    
+
 };
+
+
+struct BoardState
+{
+    Space currentBoard[3][3];
+
+    float score;
+    float totalScore;
+
+    vector<BoardState> possibleMoves;
+};
+
 
 int main()
 {
@@ -169,3 +180,10 @@ int main()
         }
     }
 }
+
+//vector<BoardState> planMoves()
+//{
+//    vector<BoardStates> nextMoves;
+//
+//    return nextMoves;
+//}
