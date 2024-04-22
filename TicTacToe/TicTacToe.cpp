@@ -31,17 +31,58 @@ struct BoardState
         {
             for (int j = 0; j < 3; j++)
             {
-                this->board[i][j].ChangeMark(aBoard.board[i][j].mark)
+                this->board[i][j].ChangeMark(aBoard.board[i][j].mark);
             }
         }
+
+        this->score = aBoard.score;
     }
     
 };
 
+int EvaluateMove(int compSpots, int playerSpots)
+{
+    int score = 0;
+
+    if (compSpots == 3)
+    {
+        score += 1000;
+    }
+    else if (compSpots == 2 && playerSpots == 1)
+    {
+        score += 0;
+    }
+    else if (compSpots == 1 && playerSpots == 2)
+    {
+        score += 100;
+    }
+    else if (compSpots == 1 && playerSpots == 1)
+    {
+        score += 1;
+    }
+    else if (compSpots == 1 && playerSpots == 0)
+    {
+        score += 3;
+    }
+    else if (compSpots == 2 && playerSpots == 0)
+    {
+        score += 5;
+    }
+    else if (compSpots == 0 && playerSpots == 1)
+    {
+        score -= 1;
+    }
+    else if (compSpots == 0 && playerSpots == 2)
+    {
+        score -= 100;
+    }
+
+    return score;
+}
+
 BoardState CompMove(BoardState currentBoard, char player)
 {
     char symbol;
-    BoardState move;
     vector<BoardState> nextMoves;
 
     if (player == 'X')
@@ -57,275 +98,272 @@ BoardState CompMove(BoardState currentBoard, char player)
     {
         for (int j = 0; j < 3; j++)
         {
-            if (currentBoard[i][j].mark == ' ')
+            if (currentBoard.board[i][j].mark == ' ')
             {
-                
-                nextMoves[i][j].mark = symbol;
+                nextMoves.push_back(currentBoard);
+                nextMoves.back().board[i][j].mark = symbol;
 
                 int playerSpots = 0;
                 int compSpots = 0;
                 //Evaluating top row
-                if (nextMoves[0][0] == symbol)
+                if (nextMoves.back().board[0][0].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[0][0] == player)
+                else if (nextMoves.back().board[0][0].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[1][0] == symbol)
+                if (nextMoves.back().board[1][0].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[1][0] == player)
+                else if (nextMoves.back().board[1][0].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[2][0] == symbol)
+                if (nextMoves.back().board[2][0].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[2][0] == player)
+                else if (nextMoves.back().board[2][0].mark == player)
                 {
                     playerSpots++;
                 }
 
-                nextMoves[i][j] += EvaluateMove(compSpots, playerSpots);
+                nextMoves.back().score += EvaluateMove(compSpots, playerSpots);
 
                 compSpots = 0;
                 playerSpots = 0;
 
                 //Evaluating middle row
-                if (nextMoves[0][1] == symbol)
+                if (nextMoves.back().board[0][1].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[0][1] == player)
+                else if (nextMoves.back().board[0][1].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[1][1] == symbol)
+                if (nextMoves.back().board[1][1].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[1][1] == player)
+                else if (nextMoves.back().board[1][1].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[2][1] == symbol)
+                if (nextMoves.back().board[2][1].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[2][1] == player)
+                else if (nextMoves.back().board[2][1].mark == player)
                 {
                     playerSpots++;
                 }
 
-                nextMoves[i][j] += EvaluateMove(compSpots, playerSpots);
+                nextMoves.back().score += EvaluateMove(compSpots, playerSpots);
 
                 compSpots = 0;
                 playerSpots = 0;
 
                 //Evaluating bottom row
-                if (nextMoves[0][2] == symbol)
+                if (nextMoves.back().board[0][2].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[0][2] == player)
+                else if (nextMoves.back().board[0][2].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[1][2] == symbol)
+                if (nextMoves.back().board[1][2].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[1][2] == player)
+                else if (nextMoves.back().board[1][2].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[2][2] == symbol)
+                if (nextMoves.back().board[2][2].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[2][2] == player)
+                else if (nextMoves.back().board[2][2].mark == player)
                 {
                     playerSpots++;
                 }
 
-                nextMoves[i][j] += EvaluateMove(compSpots, playerSpots);
+                nextMoves.back().score += EvaluateMove(compSpots, playerSpots);
 
 
                 compSpots = 0;
                 playerSpots = 0;
 
                 //Evaluating left column
-                if (nextMoves[0][0] == symbol)
+                if (nextMoves.back().board[0][0].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[0][0] == player)
+                else if (nextMoves.back().board[0][0].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[0][1] == symbol)
+                if (nextMoves.back().board[0][1].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[0][1] == player)
+                else if (nextMoves.back().board[0][1].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[0][2] == symbol)
+                if (nextMoves.back().board[0][2].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[0][2] == player)
+                else if (nextMoves.back().board[0][2].mark == player)
                 {
                     playerSpots++;
                 }
 
-                nextMoves[i][j] += EvaluateMove(compSpots, playerSpots);
+                nextMoves.back().score += EvaluateMove(compSpots, playerSpots);
 
                 compSpots = 0;
                 playerSpots = 0;
 
                 //Evaluating middle column
-                if (nextMoves[1][0] == symbol)
+                if (nextMoves.back().board[1][0].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[1][0] == player)
+                else if (nextMoves.back().board[1][0].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[1][1] == symbol)
+                if (nextMoves.back().board[1][1].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[1][1] == player)
+                else if (nextMoves.back().board[1][1].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[1][2] == symbol)
+                if (nextMoves.back().board[1][2].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[1][2] == player)
+                else if (nextMoves.back().board[1][2].mark == player)
                 {
                     playerSpots++;
                 }
 
-                nextMoves[i][j] += EvaluateMove(compSpots, playerSpots);
+                nextMoves.back().score += EvaluateMove(compSpots, playerSpots);
 
                 compSpots = 0;
                 playerSpots = 0;
 
                 //Evaluating right column
-                if (nextMoves[2][0] == symbol)
-                {
-                    compSpots++
-                }
-                else if (nextMoves[2][0] == player)
-                {
-                    playerSpots++;
-                }
-                if (nextMoves[2][1] == symbol)
+                if (nextMoves.back().board[2][0].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[2][1] == player)
+                else if (nextMoves.back().board[2][0].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[2][2] == symbol)
+                if (nextMoves.back().board[2][1].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[2][2] == player)
+                else if (nextMoves.back().board[2][1].mark == player)
+                {
+                    playerSpots++;
+                }
+                if (nextMoves.back().board[2][2].mark == symbol)
+                {
+                    compSpots++;
+                }
+                else if (nextMoves.back().board[2][2].mark == player)
                 {
                     playerSpots++;
                 }
 
-                nextMoves[i][j] += EvaluateMove(compSpots, playerSpots);
+                nextMoves.back().score += EvaluateMove(compSpots, playerSpots);
 
                 compSpots = 0;
                 playerSpots = 0;
 
                 //Evaluating top to bottom diagonal
-                if (nextMoves[0][0] == symbol)
+                if (nextMoves.back().board[0][0].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[0][0] == player)
+                else if (nextMoves.back().board[0][0].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[1][1] == symbol)
+                if (nextMoves.back().board[1][1].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[1][1] == player)
+                else if (nextMoves.back().board[1][1].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[2][2] == symbol)
+                if (nextMoves.back().board[2][2].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[2][2] == player)
+                else if (nextMoves.back().board[2][2].mark == player)
                 {
                     playerSpots++;
                 }
 
-                nextMoves[i][j] += EvaluateMove(compSpots, playerSpots);
+                nextMoves.back().score += EvaluateMove(compSpots, playerSpots);
 
                 compSpots = 0;
                 playerSpots = 0;
 
                 //Evaluating bottom to top diagonal
-                if (nextMoves[2][0] == symbol)
+                if (nextMoves.back().board[2][0].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[2][0] == player)
+                else if (nextMoves.back().board[2][0].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[1][1] == symbol)
+                if (nextMoves.back().board[1][1].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[1][1] == player)
+                else if (nextMoves.back().board[1][1].mark == player)
                 {
                     playerSpots++;
                 }
-                if (nextMoves[0][2] == symbol)
+                if (nextMoves.back().board[0][2].mark == symbol)
                 {
                     compSpots++;
                 }
-                else if (nextMoves[0][2] == player)
+                else if (nextMoves.back().board[0][2].mark == player)
                 {
                     playerSpots++;
                 }
 
-                nextMoves[i][j] += EvaluateMove(compSpots, playerSpots);
+                nextMoves.back().score += EvaluateMove(compSpots, playerSpots);
 
-            }
-            else
-            {
-                nextMoves[i][j].score = -1000;
             }
         }
     }
 
-    for (int i = 0; i < 3; i++)
+    BoardState move;
+
+    move.CopyBoard(nextMoves.front());
+
+    for (int i = 0; i < nextMoves.size(); i++)
     {
-        for (int j = 0; j < 3; j++)
+        if (nextMoves.back().score > move.score)
         {
-            if (move == null || nextMoves[i][j].score > move.score)
-            {
-                move = nextMoves[i][j]
-            }
+            move.CopyBoard(nextMoves.at(i));
         }
     }
 
@@ -403,8 +441,23 @@ int main()
             else
             {
                 currentBoard.CopyBoard(CompMove(currentBoard, player));
+                if (xTurn)
+                {
+                    cout << "\nMake a move X\n";
+                    xTurn = false;
+                }
+                else
+                {
+                    cout << "\nMake a move O\n";
+                    xTurn = true;
+                }
+                cout << "\n    1   2   3\n"
+                    "1   " << currentBoard.board[0][0].mark << " | " << currentBoard.board[1][0].mark << " | " << currentBoard.board[2][0].mark << "\n    _________\n" <<
+                    "2   " << currentBoard.board[0][1].mark << " | " << currentBoard.board[1][1].mark << " | " << currentBoard.board[2][1].mark << "\n    _________\n" <<
+                    "3   " << currentBoard.board[0][2].mark << " | " << currentBoard.board[1][2].mark << " | " << currentBoard.board[2][2].mark << "\n";
             }
         }
+
         valid = false;
         //Putting out the board.
         cout << "\n    1   2   3\n"
@@ -484,56 +537,39 @@ int main()
 
         if (Xwin == true)
         {
-            cout << "\n\n THE X PLAYER WINS\n\n";
+            cout << "\n\nTHE X PLAYER WINS\n\n";
             gameRunning = false;
+            return 0;
         }
 
         if (Owin == true)
         {
-            cout << "\n\n THE O PLAYER WINS\n\n";
+            cout << "\n\nTHE O PLAYER WINS\n\n";
             gameRunning = false;
+            return 0;
+        }
+
+        bool draw = true;
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if (currentBoard.board[i][j].mark == ' ')
+                {
+                    draw = false;
+                }
+            }
+        }
+
+        if (draw)
+        {
+            cout << "\n\nDRAW \n\n";
+            gameRunning = false;
+            return 0;
         }
     }
+
+    return 0;
 }
 
-
-
-int EvaluateMove(int compSpots, int playerSpots)
-{
-    int score = 0;
-
-    if (compSpots == 3)
-    {
-        score += 1000;
-    }
-    else if (compSpots == 2 && playerSpots == 1)
-    {
-        score += 0;
-    }
-    else if (compSpots == 1 && playerSpots == 2)
-    {
-        score += 100;
-    }
-    else if (compSpots == 1 && playerSpots == 1)
-    {
-        score += 1;
-    }
-    else if (compSpots == 1 && playerSpots == 0)
-    {
-        score += 3;
-    }
-    else if (compSpots == 2 && playerSpots == 0)
-    {
-        score += 5;
-    }
-    else if (compSpots == 0 && playerSpots == 1)
-    {
-        score -= 1;
-    }
-    else if (compSpots == 0 && playerSpots == 2)
-    {
-        score -= 100;
-    }
-
-    return score;
-}
