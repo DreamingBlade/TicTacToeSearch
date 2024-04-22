@@ -451,10 +451,8 @@ int main()
                     cout << "\nMake a move O\n";
                     xTurn = true;
                 }
-                cout << "\n    1   2   3\n"
-                    "1   " << currentBoard.board[0][0].mark << " | " << currentBoard.board[1][0].mark << " | " << currentBoard.board[2][0].mark << "\n    _________\n" <<
-                    "2   " << currentBoard.board[0][1].mark << " | " << currentBoard.board[1][1].mark << " | " << currentBoard.board[2][1].mark << "\n    _________\n" <<
-                    "3   " << currentBoard.board[0][2].mark << " | " << currentBoard.board[1][2].mark << " | " << currentBoard.board[2][2].mark << "\n";
+                
+                valid = true;
             }
         }
 
