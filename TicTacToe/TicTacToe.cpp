@@ -74,7 +74,7 @@ int EvaluateMove(int compSpots, int playerSpots)
     }
     else if (compSpots == 0 && playerSpots == 2)
     {
-        score -= 100;
+        score -= 1000;
     }
 
     return score;
@@ -98,10 +98,10 @@ BoardState CompMove(BoardState currentBoard, char player)
     {
         for (int j = 0; j < 3; j++)
         {
-            if (currentBoard.board[i][j].mark == ' ')
+            if (currentBoard.board[j][i].mark == ' ')
             {
                 nextMoves.push_back(currentBoard);
-                nextMoves.back().board[i][j].mark = symbol;
+                nextMoves.back().board[j][i].mark = symbol;
 
                 int playerSpots = 0;
                 int compSpots = 0;
