@@ -361,7 +361,7 @@ BoardState CompMove(BoardState currentBoard, char player)
 
     for (int i = 0; i < nextMoves.size(); i++)
     {
-        if (nextMoves.back().score > move.score)
+        if (nextMoves.at(i).score > move.score)
         {
             move.CopyBoard(nextMoves.at(i));
         }
